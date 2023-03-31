@@ -2,9 +2,13 @@ import gsap from 'gsap';
 import { AdditiveBlending, BackSide, BufferGeometry, Float32BufferAttribute, Group, Mesh, PerspectiveCamera, Points, PointsMaterial, Scene, ShaderMaterial, SphereGeometry, TextureLoader, Vector2, WebGLRenderer } from "three";
 
 import earthImg from './assets/earth.jpg';
+//@ts-ignore
 import earthVertexShader from './shaders/earthVertex.glsl';
+//@ts-ignore
 import earthFragmentShader from './shaders/earthFragment.glsl';
+//@ts-ignore
 import atmosphereVertexShader from './shaders/atmosphereVertex.glsl';
+//@ts-ignore
 import atmosphereFragmentShader from './shaders/atmosphereFragment.glsl';
 
 import './style.css';
@@ -69,7 +73,7 @@ const atmosphereMaterial = new ShaderMaterial({
     side: BackSide
 })
 const atmosphereMesh = new Mesh(planetGeometry.clone(), atmosphereMaterial);
-atmosphereMesh.scale.set(1.2, 1.2, 1.2);
+atmosphereMesh.scale.set(1.1, 1.1, 1.1);
 
 scene.add(atmosphereMesh);
 
@@ -89,7 +93,7 @@ starsGeometry.setAttribute('position', new Float32BufferAttribute(starsCoords, 3
 const starsMesh = new Points(starsGeometry, starsMaterial);
 scene.add(starsMesh);
 
-camera.position.setZ(10);
+camera.position.setZ(20);
 
 const mouseCoords = new Vector2();
 
