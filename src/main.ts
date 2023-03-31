@@ -1,5 +1,5 @@
 import gsap from 'gsap';
-import { AdditiveBlending, BackSide, Group, Mesh, PerspectiveCamera, Scene, ShaderMaterial, SphereGeometry, TextureLoader, Vector2, WebGLRenderer } from "three";
+import { AdditiveBlending, BackSide, BufferGeometry, Float32BufferAttribute, Group, Mesh, PerspectiveCamera, Points, PointsMaterial, Scene, ShaderMaterial, SphereGeometry, TextureLoader, Vector2, WebGLRenderer } from "three";
 
 import earthImg from './assets/earth.jpg';
 import earthVertexShader from './shaders/earthVertex.glsl';
@@ -67,17 +67,27 @@ const atmosphereMaterial = new ShaderMaterial({
     fragmentShader: atmosphereFragmentShader,
     blending: AdditiveBlending,
     side: BackSide
-    // uniforms: {
-    // earthTexture: {
-    // value: new TextureLoader().load(earthImg)
-    // }
-    // }
-    // side: DoubleSide
 })
 const atmosphereMesh = new Mesh(planetGeometry.clone(), atmosphereMaterial);
 atmosphereMesh.scale.set(1.2, 1.2, 1.2);
 
 scene.add(atmosphereMesh);
+
+const starsGeometry = new BufferGeometry();
+const starsMaterial = new PointsMaterial({ color: 0xffffff });
+
+const starsCoords: number[] = [];
+for (let i = 0; i < 1000; i++) {
+    const x = (Math.random() - 0.5) * 2000;
+    const y = (Math.random() - 0.5) * 2000;
+    const z = -Math.random() * 2000;
+
+    starsCoords.push(x, y, z);
+}
+starsGeometry.setAttribute('position', new Float32BufferAttribute(starsCoords, 3));
+
+const starsMesh = new Points(starsGeometry, starsMaterial);
+scene.add(starsMesh);
 
 camera.position.setZ(10);
 
